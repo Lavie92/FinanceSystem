@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+
+.box1{
+    display: contents;
+    position: relative;
+    width: 250px;
+    height: 250px;
+}
+
+.dropdown1{
+    position: relative;
+    width: 10%;
+    height: 58px;
+    background: #212529;
+    color: #fff;
+    font-size: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, -2);
+}
+
+.dropdown1 .left-icon,
+.dropdown1 .right-icon {
+    position: relative;
+    top: 2px;
+    display: inline-block;
+    width: 15px;
+    height: 5px;
+    background: #fff;
+    border-radius: 40px;
+    transition: .5s;
+}
+
+.dropdown1 .left-icon{
+    left: 7px;
+    transform: rotate(45deg);
+}
+
+.dropdown1.active .left-icon{
+    transform: rotate(135deg);
+}
+
+.dropdown1 .right-icon{
+    transform: rotate(-45deg);
+}
+
+.dropdown1.active .right-icon{
+    transform: rotate(-135deg);
+}
+
+.dropdown1 .items{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    margin-top: 63px;
+    overflow: hidden;
+    visibility: hidden;
+    transition: .5s;
+}
+
+.dropdown1.active .items{
+    visibility: visible;
+}
+
+.dropdown1 .items a{
+    position: relative;
+    left: 100%;
+    display: flex;
+    font-size: 20px;
+    background: #fff;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    z-index: 1;
+    overflow: hidden;
+    transition: .5s;
+    transition-delay: calc(60ms * var(--i));
+}
+
+.dropdown1.active .items a{
+    left: 0;
+}
+
+.dropdown1 .items a:hover{
+    color: #fff;
+}
+
+.dropdown1 .items a span{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #212529;
+    z-index: -1;
+    border-radius: inherit;
+    transform: rotate(160deg);
+    transform-origin: right;
+    transition: .10s;
+}
+
+.dropdown1 .items a:hover span{
+    transform: rotate(0deg);
+}

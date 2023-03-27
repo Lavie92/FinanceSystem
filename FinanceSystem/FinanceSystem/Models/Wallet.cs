@@ -15,12 +15,13 @@ namespace FinanceSystem.Models
             Transactions = new HashSet<Transaction>();
         }
 
-        [Key]
         public int WalletId { get; set; }
-        public string WalletName { get; set; }
 
         [StringLength(128)]
         public string UserId { get; set; }
+
+        [StringLength(50)]
+        public string WalletName { get; set; }
 
         public decimal? Amount { get; set; }
 
@@ -28,9 +29,12 @@ namespace FinanceSystem.Models
 
         public int? PlanId { get; set; }
 
+        public virtual AspNetUser AspNetUser { get; set; }
+
         public virtual Plan Plan { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Transaction> Transactions { get; set; }
+
     }
 }

@@ -25,11 +25,9 @@ namespace FinanceSystem.Models
 
         [StringLength(200)]
         public string Note { get; set; }
-
+        public HttpPostedFileBase ImageFile;
         public virtual Category Category { get; set; }
 
         public virtual Wallet Wallet { get; set; }
-        public HttpPostedFileBase ImageFile;
-
     }
 }

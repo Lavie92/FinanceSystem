@@ -22,11 +22,13 @@ namespace FinanceSystem.Controllers
         {
             var transactions = db.Transactions.ToList();
             var categories = db.Categories.ToList();
-            var viewModel = new ViewModel
+            var viewModel = new TransactionViewModel
             {
                 Transactions = transactions,
                 Categories = categories
             };
+            var totalAmount = GetTotalAmount();
+            ViewBag.TotalAmount = totalAmount;
             return View(viewModel);
         }
         public ActionResult FilterByCategory(string category)
@@ -38,18 +40,16 @@ namespace FinanceSystem.Controllers
                 transactions = transactions.Where(t => t.Category.CategoryName == category);
             }
 
-            var viewModel = new ViewModel
+            var viewModel = new TransactionViewModel
             {
                 Transactions = transactions.ToList(),
                 Categories = db.Categories.ToList()
             };
 
-            // Trả về một partial view chứa danh sách transaction đã được lọc
 
             return View("Index", viewModel);
         }
 
-        // GET: Transactions/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -165,7 +165,10 @@ namespace FinanceSystem.Controllers
         {
             return View("Index");
         }
-
+        public decimal GetTotalAmount()
+        {
+            return db.Transactions.Sum(x => x.Amount.Value);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

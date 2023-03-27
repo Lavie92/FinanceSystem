@@ -25,5 +25,7 @@ namespace FinanceSystem.Models
 
         [StringLength(100)]
         public string Image { get; set; }
+
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }
