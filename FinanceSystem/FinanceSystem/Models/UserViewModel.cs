@@ -5,10 +5,12 @@ using System.Web;
 
 namespace FinanceSystem.Models
 {
-    public class WalletViewModel
+    public class UserViewModel
     {
-        public UserInformation UserInformation { get; set; }
+        public IEnumerable<AspNetUser> AspNetUser { get; set; }
+        public IEnumerable<UserInformation> UserInformation { get; set; }
         public IEnumerable<Wallet> Wallet { get; set; }
+        public IEnumerable<Transaction> Transaction { get; set; }
 
     }
 }

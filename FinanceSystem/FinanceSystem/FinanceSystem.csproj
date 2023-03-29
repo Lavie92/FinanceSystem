@@ -221,15 +221,21 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\menu.css" />
     <Content Include="Content\css\base.css" />
     <Content Include="Content\css\button.css" />
     <Content Include="Content\css\search.css" />
     <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\Addimage.css" />
     <Content Include="Content\css\style1.css" />
     <Content Include="Content\css\StyleLogin.css" />
     <Content Include="Content\css\StyleLogin1.css" />
     <Content Include="Content\css\styles.css" />
     <Content Include="Content\css\target.css" />
+    <Content Include="Content\Images\idesign_logogg_1.jpg" />
+    <Content Include="Content\js\menu.js" />
+    <Content Include="Content\js\Addimage.js" />
+    <Content Include="Content\js\sortable.js" />
     <Content Include="Content\js\account.js" />
     <Content Include="Content\js\canceltran.js" />
     <Content Include="Content\js\datatables-simple-demo.js" />
@@ -255,9 +261,10 @@
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\UserInformations\Create.cshtml" />
     <Content Include="Areas\Admin\Views\UserInformations\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\UserInformations\Details.cshtml" />
     <Content Include="Areas\Admin\Views\UserInformations\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\UserInformations\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\UserInformations\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\UserInformations\_UserDetails.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -290,7 +297,6 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -314,7 +320,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Content\Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

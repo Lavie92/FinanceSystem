@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using FinanceSystem.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity;
-using System.Web.Configuration;
 
 namespace FinanceSystem.Areas.Admin.Controllers
 {
@@ -33,27 +32,29 @@ namespace FinanceSystem.Areas.Admin.Controllers
         // GET: Admin/UserInformations/Details/5
         public ActionResult Details(string id)
         {
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
+            //UserInformation userInformation = db.UserInformations.Find(id);
+            //if (userInformation == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //return PartialView("_UserDetails", userInformation);
                  if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
-                UserInformation userInformation = db.UserInformations.FirstOrDefault(p=>p.UserId ==  id);
+                UserInformation userInformation = db.UserInformations.Find(id);
                 if (userInformation == null)
                 {
                     return HttpNotFound();
                 }
-               ViewBag.FirstName = userInformation.FirstName;
-               ViewBag.LastName = userInformation.LastName;
-
-               var listTransaction = db.Transactions.ToList().Where(x => x.Wallet.UserId == id).ToList();               
-
-               return PartialView("Details", listTransaction);
-
-        }
-        [ChildActionOnly]
-        public ActionResult RenderMenu()
-        {
-            return PartialView("Details");
+                List<UserInformation> userList = new List<UserInformation>();
+                userList.Add(userInformation);
+                return View("Index", userList);
+            
         }
 
         // GET: Admin/UserInformations/Create

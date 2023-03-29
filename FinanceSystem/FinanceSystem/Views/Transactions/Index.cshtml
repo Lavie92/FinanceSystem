@@ -3,6 +3,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/css/menu.css" rel="stylesheet" />
 <div class="app-content-header">
     <h1 class="app-content-headerText">Transaction</h1>
     <button class="mode-switch" title="Switch Theme">
@@ -51,9 +52,9 @@
                         Reset
                     </button>
                     @*<a href="@Url.Action("FilterCategory", "Transaction")">*@
-                        <button class="filter-button apply" id="filterButton">
-                            Apply
-                        </button>
+                    <button class="filter-button apply" id="filterButton">
+                        Apply
+                    </button>
                     @*</a>*@
 
                 </div>
@@ -69,6 +70,11 @@
 </div>
 <div class="products-area-wrapper tableView">
     <div class="products-header">
+        <div></div>
+
+        <div></div>
+        <div></div>
+        <div></div>
         <div class="product-cell image">
             Giao dịch
             <button class="sort-button">
@@ -99,7 +105,11 @@
     </div>
     @foreach (var item in Model.Transactions)
     {
+       
         <div class="products-row" id="transactionList">
+            <div>
+
+       </div>
             <button class="cell-more-button">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1" /><circle cx="12" cy="5" r="1" /><circle cx="12" cy="19" r="1" /></svg>
             </button>
@@ -108,16 +118,30 @@
                 <li>Option 2</li>
                 <li>Option 3</li>
             </ul>
-            <script>
-                var optionsMenu = document.getElementById("options-menu");
-                var moreButton = document.querySelector(".cell-more-button");
-
-                moreButton.addEventListener("click", function () {
+            @*<script>
+            var moreButtons = document.querySelectorAll(".cell-more-button");
+            moreButtons.forEach(function (button) {
+                button.addEventListener("click", function () {
+                    var optionsMenu = this.nextElementSibling;
                     if (optionsMenu.style.display === "none") {
                         optionsMenu.style.display = "block";
                     } else {
                         optionsMenu.style.display = "none";
                     }
+                });
+            });
+        </script>*@
+            <script>
+                var moreButtons = document.querySelectorAll(".cell-more-button");
+                moreButtons.forEach(function (button) {
+                    button.addEventListener("click", function () {
+                        var optionsMenu = this.nextElementSibling;
+                        if (optionsMenu.style.display === "none") {
+                            optionsMenu.style.display = "block";
+                        } else {
+                            optionsMenu.style.display = "none";
+                        }
+                    });
                 });
             </script>
 
@@ -134,27 +158,9 @@
             <div class="product-cell stock"><span class="cell-label">Stock:</span>@item.Note</div>
         </div>
     }
-    <p>Tổng số tiền đã tiêu: @ViewBag.TotalAmount</p>
+
 
 </div>
-<script>
-    $(document).ready(function () {
-        $('#filterButton').click(function () {
-            var category = $('#categoryFilter').val(); // Lấy giá trị của select option
+<p>Tổng số tiền đã tiêu: @ViewBag.TotalAmount</p>
+<script src="~/Content/js/menu.js"></script>
 
-            // Gửi yêu cầu đến server bằng Ajax
-            $.ajax({
-                url: '/Transactions/FilterByCategory', // Đường dẫn tới action xử lý yêu cầu lọc
-                type: 'POST', // Phương thức HTTP
-                data: { category: category }, // Tham số gửi đi
-                success: function (result) {
-                    // Cập nhật lại nội dung trên trang
-                    $('#transactionList').html(result);
-                },
-                error: function (xhr, status, error) {
-                    console.log(error); // Xử lý lỗi nếu có
-                }
-            });
-        });
-    });
-</script>

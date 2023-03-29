@@ -83,8 +83,10 @@ header{
     color: #162938;
 }
 
-.wrapper{
+.wrapper {
     position: relative;
+    top: 20%;
+    left: 30%;
     width: 400px;
     height: 440px;
     background: transparent;

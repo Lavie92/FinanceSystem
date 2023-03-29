@@ -4,7 +4,8 @@
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link href="~/Content/css/Addimage.css" rel="stylesheet" />
 <h2>Create</h2>
 
 
@@ -43,15 +44,44 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CreateDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="datetime-local" name="CreateDate"/>
+                <input type="datetime-local" name="CreateDate" />
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" name="ImageFile" class="form-control" accept=".jpg, .png, .jpeg" />
-        </div>
+            <div class="col-md-10">
+
+
+                
+                <body class="body-1">
+                 
+
+                    <!-- Upload  -->
+                    <div id="file-upload-form" class="uploader">
+                        <input id="file-upload" type="file" name="ImageFile" accept="image/*" />
+
+                        <label for="file-upload" id="file-drag">
+                            <img id="file-image" src="#" alt="Preview" class="hidden">
+                            <div id="start">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                                <div>Select a file or drag here</div>
+                                <div id="notimage" class="hidden">Please select an image</div>
+                                <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+                            </div>
+                            <div id="response" class="hidden">
+                                <div id="messages"></div>
+                                <progress class="progress" id="file-progress" value="0">
+                                    <span>0</span>%
+                                </progress>
+                            </div>
+                        </label>
+                    </div>
+                    <!-- partial -->
+                    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+                    <script src="~/Content/js/Addimage.js"></script>
+                    </body>
+            </div>
             <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
             <link rel="stylesheet" href="~/Content/UploadImage/style.css">-->
             <!-- Upload  -->
