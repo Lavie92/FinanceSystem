@@ -305,13 +305,12 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Transactions\Create.cshtml" />
     <Content Include="Views\Transactions\Delete.cshtml" />
     <Content Include="Views\Transactions\Details.cshtml" />
     <Content Include="Views\Transactions\Edit.cshtml" />
-    <Content Include="Views\Transactions\Index.cshtml" />
-    <Content Include="Views\Transactions\Create.cshtml" />
-    <Content Include="Views\Transactions\_TransactionList.cshtml" />
     <Content Include="Views\Transactions\FilterCategory.cshtml" />
+    <Content Include="Views\Transactions\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

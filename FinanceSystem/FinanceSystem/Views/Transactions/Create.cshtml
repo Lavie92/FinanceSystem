@@ -49,6 +49,16 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Income, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButtonFor(m => m.Income, "true")
+                <label>Inflow</label>
+                @Html.RadioButtonFor(m => m.Income, "false")
+                <label>Outflow</label>
+            </div>
+        </div>
+
+        <div class="form-group">
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
 
@@ -82,31 +92,6 @@
                     <script src="~/Content/js/Addimage.js"></script>
                     </body>
             </div>
-            <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-            <link rel="stylesheet" href="~/Content/UploadImage/style.css">-->
-            <!-- Upload  -->
-            <!--<form id="file-upload-form" class="uploader">
-                <input id="file-upload" type="file" name="ImageFile" accept="image/*"  style="display:none;"/>
-
-                <label for="file-upload" id="file-drag">
-                    <img id="file-image" src="#" alt="Preview" class="hidden">
-                    <div id="start">
-                        <i class="fa fa-download" aria-hidden="true"></i>
-                        <div>Select a file or drag here</div>
-                        <div id="notimage" class="hidden">Please select an image</div>
-                        <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
-                    </div>
-                    <div id="response" class="hidden">
-                        <div id="messages"></div>
-                        <progress class="progress" id="file-progress" value="0">
-                            <span>0</span>%
-                        </progress>
-                    </div>
-                </label>
-            </form>-->
-            <!-- partial -->
-            <!--<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
-            <script src="~/Content/UploadImage/script.js"></script>-->
         </div>
 
         <div class="form-group">

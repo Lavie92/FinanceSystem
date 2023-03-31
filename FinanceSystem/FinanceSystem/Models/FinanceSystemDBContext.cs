@@ -70,10 +70,6 @@ namespace FinanceSystem.Models
                 .HasPrecision(18, 0);
 
             modelBuilder.Entity<Wallet>()
-                .Property(e => e.Amount)
-                .HasPrecision(18, 0);
-
-            modelBuilder.Entity<Wallet>()
                 .Property(e => e.AccountBalance)
                 .HasPrecision(18, 0);
 

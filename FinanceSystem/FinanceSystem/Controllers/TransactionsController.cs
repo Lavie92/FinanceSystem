@@ -10,10 +10,11 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Util;
 using FinanceSystem.Models;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
-
 namespace FinanceSystem.Controllers
 {
+    [Authorize]
     public class TransactionsController : Controller
     {
         private FinanceSystemDBContext db = new FinanceSystemDBContext();
@@ -21,28 +22,28 @@ namespace FinanceSystem.Controllers
         // GET: Transactions
         public ActionResult Index()
         {
-            var transactions = db.Transactions.ToList();
+            string id = User.Identity.GetUserId();
+            var transactions = db.Transactions.ToList().Where(x => x.Wallet.UserId == id).ToList();
             var categories = db.Categories.ToList();
             var viewModel = new TransactionViewModel
             {
                 Transactions = transactions,
                 Categories = categories
             };
-            //var totalAmount = GetTotalAmount();
-            //ViewBag.TotalAmount = totalAmount;
             return View(viewModel);
         }
 
         public PartialViewResult FilterCategory(int? cate)
         {
+            string id = User.Identity.GetUserId();
             List<Transaction> list = new List<Transaction>();
             if (cate == null || cate == 0)
             {
-                list = db.Transactions.ToList();
+                list = db.Transactions.ToList().Where(x => x.Wallet.UserId == id).ToList();
             }
             else
             {
-                list = db.Transactions.Where(p => p.CategoryId == cate).ToList();
+                list = db.Transactions.ToList().Where(x => x.Wallet.UserId == id).ToList().Where(p => p.CategoryId == cate).ToList();
 
             }
             var totalAmount = list.Sum(x => x.Amount);
@@ -68,23 +69,30 @@ namespace FinanceSystem.Controllers
         // GET: Transactions/Create
         public ActionResult Create()
         {
-            ViewBag.WalletId = new SelectList(db.Wallets.ToList(), "WalletId", "WalletName");
+            string id = User.Identity.GetUserId();
+            ViewBag.WalletId = new SelectList(db.Wallets.ToList().Where(x => x.UserId == id).ToList(), "WalletId", "WalletName");
             ViewBag.CategoryId = new SelectList(db.Categories.ToList(), "CategoryId", "CategoryName");
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TransactionId,WalletId,CategoryId,Amount,CreateDate,Image,Note")] Transaction transaction)
+        public ActionResult Create([Bind(Include = "TransactionId,WalletId,CategoryId,Amount,CreateDate,Image,Income,Note")] Transaction transaction)
         {
-                transaction.ImageFile = Request.Files["ImageFile"];
+            transaction.ImageFile = Request.Files["ImageFile"];
             if (transaction.ImageFile != null && transaction.ImageFile.ContentLength > 0)
             {
                 var fileName = Path.GetFileName(transaction.ImageFile.FileName);
                 var filePath = Path.Combine(Server.MapPath("~/Content/Images"), fileName);
                 transaction.ImageFile.SaveAs(filePath);
                 transaction.Image = "/Content/Images/" + fileName;
-
+    
             }
+            bool? selectedIncome = transaction.Income;
+            if (!selectedIncome.Value)
+            {
+                transaction.Amount *= -1;
+            }
+            transaction.Amount *= 1;
             if (ModelState.IsValid)
             {
                 db.Transactions.Add(transaction);
@@ -93,7 +101,7 @@ namespace FinanceSystem.Controllers
             }
 
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryID", "CategoryName", transaction.CategoryId);
-            ViewBag.WalletId = new SelectList(db.Wallets, "WalletId", "WalletName", transaction.WalletId);
+            ViewBag.WalletId = new SelectList(db.Wallets, "WalletId", "UserId", transaction.WalletId);
             return View(transaction);
         }
 
@@ -152,10 +160,6 @@ namespace FinanceSystem.Controllers
             return RedirectToAction("Index");
         }
 
-        public decimal GetTotalAmount()
-        {
-            return db.Transactions.Sum(x => x.Amount.Value);
-        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

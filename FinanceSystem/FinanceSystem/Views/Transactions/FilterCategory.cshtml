@@ -57,7 +57,20 @@
                 </div>
                 <div class="product-cell status-cell">
                     <span class="cell-label">Status:</span>
-                    <span class="status active">Active</span>
+                    @{
+                        string incomeText = item.Income == true ? "Inflow" : "Outflow";
+                    }
+                    @{
+                        if (incomeText == "Outflow")
+                        {
+                            <span class="status disabled">@incomeText</span>
+                        }
+                        else
+                        {
+                            <span class="status active">@incomeText</span>
+                        }
+                    }
+
                 </div>
                 <div class="product-cell sales">
                     <span class="cell-label">Sales:</span>@item.CreateDate

@@ -22,6 +22,7 @@ namespace FinanceSystem.Models
 
         [StringLength(100)]
         public string Image { get; set; }
+        public bool? Income { get; set; }
 
         [StringLength(200)]
         public string Note { get; set; }

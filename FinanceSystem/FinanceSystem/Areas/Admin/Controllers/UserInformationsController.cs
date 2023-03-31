@@ -25,23 +25,13 @@ namespace FinanceSystem.Areas.Admin.Controllers
             //    AspNetUser = aspNetUser,
             //    UserInformation = userInformation
             //};
-            return View(db.UserInformations.ToList());
+            return View(db.AspNetUsers.ToList());
 
         }
 
         // GET: Admin/UserInformations/Details/5
         public ActionResult Details(string id)
         {
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //UserInformation userInformation = db.UserInformations.Find(id);
-            //if (userInformation == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return PartialView("_UserDetails", userInformation);
                  if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

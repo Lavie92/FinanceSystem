@@ -23,8 +23,6 @@ namespace FinanceSystem.Models
         [StringLength(50)]
         public string WalletName { get; set; }
 
-        public decimal? Amount { get; set; }
-
         public decimal? AccountBalance { get; set; }
 
         public int? PlanId { get; set; }
