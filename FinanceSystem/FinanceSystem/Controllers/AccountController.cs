@@ -400,7 +400,7 @@ namespace FinanceSystem.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Transaction");
+            return RedirectToAction("Login", "Account");
         }
 
         //

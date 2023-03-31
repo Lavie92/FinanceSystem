@@ -44,4 +44,3 @@ sortButtons.forEach(button => {
     });
 });
 
-v

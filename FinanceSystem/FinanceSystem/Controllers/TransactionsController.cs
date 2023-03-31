@@ -10,6 +10,7 @@ using System.Web.Configuration;
 using System.Web.Mvc;
 using System.Web.Util;
 using FinanceSystem.Models;
+using Newtonsoft.Json;
 
 namespace FinanceSystem.Controllers
 {
@@ -27,28 +28,28 @@ namespace FinanceSystem.Controllers
                 Transactions = transactions,
                 Categories = categories
             };
-            var totalAmount = GetTotalAmount();
-            ViewBag.TotalAmount = totalAmount;
+            //var totalAmount = GetTotalAmount();
+            //ViewBag.TotalAmount = totalAmount;
             return View(viewModel);
         }
-        public ActionResult FilterByCategory(string category)
+
+        public PartialViewResult FilterCategory(int? cate)
         {
-            var transactions = db.Transactions.Include(t => t.Category);
-            var categories = db.Categories.ToList();
-            if (!string.IsNullOrEmpty(category))
+            List<Transaction> list = new List<Transaction>();
+            if (cate == null || cate == 0)
             {
-                transactions = transactions.Where(t => t.Category.CategoryName == category);
+                list = db.Transactions.ToList();
             }
-
-            var viewModel = new TransactionViewModel
+            else
             {
-                Transactions = transactions.ToList(),
-                Categories = db.Categories.ToList()
-            };
+                list = db.Transactions.Where(p => p.CategoryId == cate).ToList();
 
-
-            return View("Index", viewModel);
+            }
+            var totalAmount = list.Sum(x => x.Amount);
+            TempData["TotalAmount"] = totalAmount;
+            return PartialView(list);
         }
+        
 
         public ActionResult Details(int? id)
         {
@@ -71,10 +72,6 @@ namespace FinanceSystem.Controllers
             ViewBag.CategoryId = new SelectList(db.Categories.ToList(), "CategoryId", "CategoryName");
             return View();
         }
-
-        // POST: Transactions/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TransactionId,WalletId,CategoryId,Amount,CreateDate,Image,Note")] Transaction transaction)
@@ -100,7 +97,6 @@ namespace FinanceSystem.Controllers
             return View(transaction);
         }
 
-        // GET: Transactions/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -117,9 +113,6 @@ namespace FinanceSystem.Controllers
             return View(transaction);
         }
 
-        // POST: Transactions/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TransactionId,WalletId,CategoryId,Amount,CreateDate,Image,Note")] Transaction transaction)
@@ -135,7 +128,6 @@ namespace FinanceSystem.Controllers
             return View(transaction);
         }
 
-        // GET: Transactions/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -150,7 +142,6 @@ namespace FinanceSystem.Controllers
             return View(transaction);
         }
 
-        // POST: Transactions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -161,10 +152,6 @@ namespace FinanceSystem.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult FilterCategory ()
-        {
-            return View("Index");
-        }
         public decimal GetTotalAmount()
         {
             return db.Transactions.Sum(x => x.Amount.Value);
