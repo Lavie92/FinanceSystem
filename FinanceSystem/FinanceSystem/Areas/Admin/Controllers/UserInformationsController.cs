@@ -18,13 +18,6 @@ namespace FinanceSystem.Areas.Admin.Controllers
         // GET: Admin/UserInformations
         public ActionResult Index()
         {
-            //var aspNetUser = db.AspNetUsers.ToList();
-            //var userInformation = db.UserInformations.ToList();
-            //var viewModel = new UserViewModel
-            //{
-            //    AspNetUser = aspNetUser,
-            //    UserInformation = userInformation
-            //};
             return View(db.AspNetUsers.ToList());
 
         }
@@ -32,19 +25,15 @@ namespace FinanceSystem.Areas.Admin.Controllers
         // GET: Admin/UserInformations/Details/5
         public ActionResult Details(string id)
         {
-                 if (id == null)
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                UserInformation userInformation = db.UserInformations.Find(id);
-                if (userInformation == null)
-                {
-                    return HttpNotFound();
-                }
-                List<UserInformation> userList = new List<UserInformation>();
-                userList.Add(userInformation);
-                return View("Index", userList);
-            
+            if (id == null)
+            {
+               return View("~/Views/Shared/Error.cshtml");
+            }
+            string userId = User.Identity.GetUserId();
+            var transaction = db.Transactions.Where(x => x.Wallet.UserId == id).ToList();
+            ViewBag.Total = db.Wallets.Where(x => x.UserId == id).Sum(x => x.AccountBalance);
+            return PartialView(transaction);
+
         }
 
         // GET: Admin/UserInformations/Create
@@ -75,7 +64,7 @@ namespace FinanceSystem.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+               return View("~/Views/Shared/Error.cshtml");
             }
             UserInformation userInformation = db.UserInformations.Find(id);
             if (userInformation == null)
@@ -106,7 +95,7 @@ namespace FinanceSystem.Areas.Admin.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+               return View("~/Views/Shared/Error.cshtml");
             }
             UserInformation userInformation = db.UserInformations.Find(id);
             if (userInformation == null)
@@ -115,7 +104,7 @@ namespace FinanceSystem.Areas.Admin.Controllers
             }
             return View(userInformation);
         }
-        
+
 
         // POST: Admin/UserInformations/Delete/5
         [HttpPost, ActionName("Delete")]

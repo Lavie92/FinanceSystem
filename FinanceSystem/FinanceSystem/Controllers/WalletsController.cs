@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using FinanceSystem.Models;
 using Microsoft.AspNet.Identity;
 
@@ -19,6 +20,7 @@ namespace FinanceSystem.Controllers
         // GET: Wallets
         public ActionResult Index()
         {
+            
             string id = User.Identity.GetUserId();
             var wallets = db.Wallets.Include(w => w.AspNetUser).Include(w => w.Plan).Where(x => x.UserId == id);
             return View(wallets.ToList());
@@ -35,11 +37,12 @@ namespace FinanceSystem.Controllers
             string userId = User.Identity.GetUserId();
             if (wallet.UserId != userId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            
+                return View("~/Views/Shared/Error.cshtml");
             }
             if (wallet == null)
             {
-                return HttpNotFound();
+                return View("~/Views/Shared/Error.cshtml");
             }
             return View(wallet);
         }
@@ -82,12 +85,12 @@ namespace FinanceSystem.Controllers
             Wallet wallet = db.Wallets.Find(id);
             if (wallet == null)
             {
-                return HttpNotFound();
+                return View("~/Views/Shared/Error.cshtml");
             }
             string userId = User.Identity.GetUserId();
             if (wallet.UserId != userId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return View("~/Views/Shared/Error.cshtml");
             }
             ViewBag.UserId = new SelectList(db.AspNetUsers.Where(x => x.Id == userId), "Id", "Email", wallet.UserId);
             ViewBag.PlanId = new SelectList(db.Plans, "PlanId", "Description", wallet.PlanId);
@@ -123,12 +126,12 @@ namespace FinanceSystem.Controllers
             Wallet wallet = db.Wallets.Find(id);            
             if (wallet == null)
             {
-                return HttpNotFound();
+                return View("~/Views/Shared/Error.cshtml");
             }
             string userId = User.Identity.GetUserId();
             if (wallet.UserId != userId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return View("~/Views/Shared/Error.cshtml");
             }
             return View(wallet);
         }

@@ -46,7 +46,6 @@ namespace FinanceSystem.Controllers
                 list = db.Transactions.ToList().Where(x => x.Wallet.UserId == id).ToList().Where(p => p.CategoryId == cate).ToList();
 
             }
-            TempData["Name"] = db.UserInformations.FirstOrDefault(x => x.UserId == id).LastName;
             var totalAmount = list.Sum(x => x.Amount);
             TempData["TotalAmount"] = totalAmount;
             return PartialView(list);
@@ -57,17 +56,17 @@ namespace FinanceSystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("~/Views/Shared/Error.cshtml");
             }
             Transaction transaction = db.Transactions.Find(id);
             string userId = User.Identity.GetUserId();
             if (transaction.Wallet.UserId != userId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return View("~/Views/Shared/Error.cshtml");
             }
             if (transaction == null)
             {
-                return HttpNotFound();
+                return View("~/Views/Shared/Error.cshtml");
             }
             return View(transaction);
         }
@@ -118,17 +117,17 @@ namespace FinanceSystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("~/Views/Shared/Error.cshtml");
             }
             Transaction transaction = db.Transactions.Find(id);
             string userId = User.Identity.GetUserId();
             if (transaction.Wallet.UserId != userId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return View("~/Views/Shared/Error.cshtml");
             }
             if (transaction == null)
             {
-                return HttpNotFound();
+                return View("~/Views/Shared/Error.cshtml");
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryID", "CategoryName", transaction.CategoryId);
             ViewBag.WalletId = new SelectList(db.Wallets, "WalletId", "WalletName", transaction.WalletId);
@@ -142,7 +141,7 @@ namespace FinanceSystem.Controllers
             string userId = User.Identity.GetUserId();
             if (transaction.Wallet.UserId != userId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return View("~/Views/Shared/Error.cshtml");
             }
             if (ModelState.IsValid)
             {
@@ -159,17 +158,17 @@ namespace FinanceSystem.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("~/Views/Shared/Error.cshtml");
             }
             Transaction transaction = db.Transactions.Find(id);
             string userId = User.Identity.GetUserId();
             if (transaction.Wallet.UserId != userId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return View("~/Views/Shared/Error.cshtml");
             }
             if (transaction == null)
             {
-                return HttpNotFound();
+                return View("~/Views/Shared/Error.cshtml");
             }
             return View(transaction);
         }
@@ -182,7 +181,7 @@ namespace FinanceSystem.Controllers
             string userId = User.Identity.GetUserId();
             if (transaction.Wallet.UserId != userId)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+                return View("~/Views/Shared/Error.cshtml");
             }
             db.Transactions.Remove(transaction);
             db.SaveChanges();

@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity;
+@using FinanceSystem.Models
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -269,7 +270,17 @@
                 <div class="account-info-picture">
                     <img src="https://images.unsplash.com/photo-1527736947477-2790e28f3443?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTE2fHx3b21hbnxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=60" alt="Account">
                 </div>
-                <div class="account-info-name">@TempData["Name"] </div>
+                @{string id = User.Identity.GetUserId();
+                    FinanceSystemDBContext db = new FinanceSystemDBContext();
+
+                    if (User.Identity.IsAuthenticated == true)
+                    {
+                        string name = db.UserInformations.FirstOrDefault(x => x.UserId == id).LastName;
+                        <div class="account-info-name">@name </div>
+
+                    }
+                    @*<div class="account-info-name">@name </div>*@
+                }
                 <div class="dropdown">
                     <button class="account-info-more" style="position: relative; left: 63px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1" /><circle cx="19" cy="12" r="1" /><circle cx="5" cy="12" r="1" /></svg>
@@ -290,11 +301,11 @@
 
                 <script>
                     var dropdownButton = document.querySelector('.account-info-more');
-                        var dropdown = document.querySelector('.dropdown');
+                    var dropdown = document.querySelector('.dropdown');
 
-                        dropdownButton.addEventListener('click', function () {
-                            dropdown.classList.toggle('open');
-                        });
+                    dropdownButton.addEventListener('click', function () {
+                        dropdown.classList.toggle('open');
+                    });
 
                 </script>
             </div>

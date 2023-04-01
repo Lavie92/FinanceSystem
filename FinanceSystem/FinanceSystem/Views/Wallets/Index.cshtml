@@ -38,7 +38,8 @@
             @Html.DisplayFor(modelItem => item.WalletName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.AccountBalance)
+            @{ var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN"); }
+            @String.Format(format, "{0:c0}", item.AccountBalance)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.WalletId }) |

@@ -35,6 +35,7 @@
             </div>
 
         </div>
+        @{ var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");}
         @foreach (var item in Model)
         {
             <div class="products-row">
@@ -50,7 +51,8 @@
                 </ul>
                 <div class="product-cell image">
                     <img src="@item.Image" alt="@item.Image">
-                    <span>$@item.Amount</span>
+
+                    <span>$@String.Format(format, "{0:c0}", @item.Amount);</span>
                 </div>
                 <div class="product-cell category">
                     <span class="cell-label">Category:</span>@item.Category.CategoryName
@@ -85,11 +87,11 @@
         var total = (decimal)TempData["TotalAmount"];
         if (total >= 0)
         {
-            <p>Yeahhhh bạn đã lãi @total cành ㄟ( ▔, ▔ )ㄏ</p>
+        <p>Yeahhhh bạn đã lãi @String.Format(format, "{0:c0}", @total) cành ㄟ( ▔, ▔ )ㄏ</p>
         }
         else
         {
-            <p>Không ổn rồi @TempData["Name"] ơi, bạn đã báo nhà @total (* ￣︿￣)</p>
+<p>Không ổn rồi @TempData["Name"] ơi, bạn đã báo nhà @String.Format(format, "{0:c0}", @total) (* ￣︿￣)</p>
         }
     }
 
