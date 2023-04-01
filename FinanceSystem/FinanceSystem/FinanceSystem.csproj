@@ -189,6 +189,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
+    <Compile Include="Controllers\UserInformationsController.cs" />
+    <Compile Include="Controllers\WalletsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -212,11 +214,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\assets\demo\chart-area-demo.js" />
-    <Content Include="Content\assets\demo\chart-bar-demo.js" />
-    <Content Include="Content\assets\demo\chart-pie-demo.js" />
-    <Content Include="Content\assets\demo\datatables-demo.js" />
-    <Content Include="Content\assets\img\error-404-monochrome.svg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -311,6 +308,16 @@
     <Content Include="Views\Transactions\Edit.cshtml" />
     <Content Include="Views\Transactions\FilterCategory.cshtml" />
     <Content Include="Views\Transactions\Index.cshtml" />
+    <Content Include="Views\Wallets\Create.cshtml" />
+    <Content Include="Views\Wallets\Delete.cshtml" />
+    <Content Include="Views\Wallets\Details.cshtml" />
+    <Content Include="Views\Wallets\Edit.cshtml" />
+    <Content Include="Views\Wallets\Index.cshtml" />
+    <Content Include="Views\UserInformations\Create.cshtml" />
+    <Content Include="Views\UserInformations\Delete.cshtml" />
+    <Content Include="Views\UserInformations\Details.cshtml" />
+    <Content Include="Views\UserInformations\Edit.cshtml" />
+    <Content Include="Views\UserInformations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

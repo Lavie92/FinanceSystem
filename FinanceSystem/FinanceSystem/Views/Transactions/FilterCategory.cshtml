@@ -81,7 +81,18 @@
             </div>
         }
     </div>
-    <p>Tổng số tiền đã tiêu: @TempData["TotalAmount"]</p>
+    @{
+        var total = (decimal)TempData["TotalAmount"];
+        if (total >= 0)
+        {
+            <p>Yeahhhh bạn đã lãi @total cành ㄟ( ▔, ▔ )ㄏ</p>
+        }
+        else
+        {
+            <p>Không ổn rồi @TempData["Name"] ơi, bạn đã báo nhà @total (* ￣︿￣)</p>
+        }
+    }
+
 
 </div>
 <script>

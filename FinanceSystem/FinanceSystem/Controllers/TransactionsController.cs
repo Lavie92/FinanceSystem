@@ -46,11 +46,12 @@ namespace FinanceSystem.Controllers
                 list = db.Transactions.ToList().Where(x => x.Wallet.UserId == id).ToList().Where(p => p.CategoryId == cate).ToList();
 
             }
+            TempData["Name"] = db.UserInformations.FirstOrDefault(x => x.UserId == id).LastName;
             var totalAmount = list.Sum(x => x.Amount);
             TempData["TotalAmount"] = totalAmount;
             return PartialView(list);
         }
-        
+
 
         public ActionResult Details(int? id)
         {
@@ -59,6 +60,11 @@ namespace FinanceSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Transaction transaction = db.Transactions.Find(id);
+            string userId = User.Identity.GetUserId();
+            if (transaction.Wallet.UserId != userId)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (transaction == null)
             {
                 return HttpNotFound();
@@ -78,6 +84,7 @@ namespace FinanceSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TransactionId,WalletId,CategoryId,Amount,CreateDate,Image,Income,Note")] Transaction transaction)
         {
+            //string id = User.Identity.GetUserId();
             transaction.ImageFile = Request.Files["ImageFile"];
             if (transaction.ImageFile != null && transaction.ImageFile.ContentLength > 0)
             {
@@ -85,7 +92,7 @@ namespace FinanceSystem.Controllers
                 var filePath = Path.Combine(Server.MapPath("~/Content/Images"), fileName);
                 transaction.ImageFile.SaveAs(filePath);
                 transaction.Image = "/Content/Images/" + fileName;
-    
+
             }
             bool? selectedIncome = transaction.Income;
             if (!selectedIncome.Value)
@@ -96,6 +103,8 @@ namespace FinanceSystem.Controllers
             if (ModelState.IsValid)
             {
                 db.Transactions.Add(transaction);
+                Wallet wallet = db.Wallets.FirstOrDefault(x => x.WalletId == transaction.WalletId);
+                wallet.AccountBalance += transaction.Amount;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -112,6 +121,11 @@ namespace FinanceSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Transaction transaction = db.Transactions.Find(id);
+            string userId = User.Identity.GetUserId();
+            if (transaction.Wallet.UserId != userId)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (transaction == null)
             {
                 return HttpNotFound();
@@ -125,6 +139,11 @@ namespace FinanceSystem.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TransactionId,WalletId,CategoryId,Amount,CreateDate,Image,Note")] Transaction transaction)
         {
+            string userId = User.Identity.GetUserId();
+            if (transaction.Wallet.UserId != userId)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(transaction).State = EntityState.Modified;
@@ -143,6 +162,11 @@ namespace FinanceSystem.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Transaction transaction = db.Transactions.Find(id);
+            string userId = User.Identity.GetUserId();
+            if (transaction.Wallet.UserId != userId)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (transaction == null)
             {
                 return HttpNotFound();
@@ -155,6 +179,11 @@ namespace FinanceSystem.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Transaction transaction = db.Transactions.Find(id);
+            string userId = User.Identity.GetUserId();
+            if (transaction.Wallet.UserId != userId)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             db.Transactions.Remove(transaction);
             db.SaveChanges();
             return RedirectToAction("Index");
