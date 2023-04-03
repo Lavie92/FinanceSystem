@@ -1,0 +1,148 @@
+﻿@model FinanceSystem.Models.UserInformation
+
+@{
+    ViewBag.Title = "AccountSetting";
+
+}
+
+@using (Html.BeginForm("AccountSetting", "UserInformations", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<link href="~/Content/css/AccountMn.css" rel="stylesheet" />
+
+<div class="sttngs">
+    <h2>SETTINGS</h2>
+    <div class="tabordion">
+        <section id="section1">
+            <input class="t" type="radio" name="sections" id="option1" checked>
+            <label for="option1" class="trr"> Account</label>
+            <article>
+
+                <div class="frm">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.UserId)
+                    <div id='profile-upload'>
+                        <div class="hvr-profile-img">
+
+
+                            <input type="file" name="ImageFile" id='getval' class="upload" id="imag">
+
+                            <div class="icon">
+                                <div class="camera4"><span></span></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="tr">
+
+
+                        <label class="label" for="input">FIRTS NAME</label>
+
+                        <input class="input" type="text" id="input" name="FirstName">
+                        <label class="label" for="input">LAST NAME</label>
+
+                        <input class="input" type="text" id="input" name="LastName">
+
+                        <label class="label" for="input">
+
+                        </label>
+
+                        <label class="label" for="input">PHONE NUMBER</label>
+                        <input class="input" type="text" name="PhoneNumber" id="input">
+
+                        <label class="label" for="input">BIRTHDAY</label>
+                        <input type="date" id="birthday" name="BirthDate">
+                    </div>
+
+
+
+                    <br>
+               
+                    @*<div class="select-wrap e">
+            <select class="select" id="select">
+                <option value="option2">Male</option>
+                <option value="option3">Female</option>
+
+            </select>
+        </div>*@
+
+
+
+
+
+
+
+                    <button type="submit">Update profile</button>
+
+                </div>
+
+
+            </article>
+        </section>
+        <section id="section2">
+
+
+
+            <input class="t" type="radio" name="sections" id="option2">
+
+
+
+            <label for="option2" class="trr"> Email</label>
+            <article>
+
+                <div class="tr wwq">
+                    <label class="label" for="input">Current email</label>
+                    <input class="input e" type="text" id="input">
+
+                    <label class="label" for="input">New email</label>
+                    <input class="input e" type="email" id="input">
+
+                    <label class="label" for="input">confirm password</label>
+                    <input class="input e" type="password" id="input">
+
+                </div>
+                <button>Update Email</button>
+            </article>
+        </section>
+        <section id="section3">
+            <input class="t" type="radio" name="sections" id="option3">
+            <label for="option3" class="trr">Password</label>
+            <article>
+
+                <div class="tr wwq">
+                    <label class="label" for="input">current Password</label>
+                    <input class="input e" type="password" id="input">
+
+                    <label class="label" for="input">new password</label>
+                    <input class="input e" type="password" id="input">
+
+                    <label class="label" for="input">repeat password</label>
+                    <input class="input e" type="password" id="input">
+
+
+                </div>
+                <button>Change Password</button>
+            </article>
+        </section>
+        <section id="section4">
+            <input class="t" type="radio" name="sections" id="option4">
+            <label for="option4" class="trr">Verify</label>
+            <article>
+
+                <p>The green verified badge <span class="ver">&#10026;</span> on ZIki lets people know that an account is authentic.</p>
+            </article>
+        </section>
+    </div>
+
+
+</div>
+}
+<script src="~/Content/js/AccountMn.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+

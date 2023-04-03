@@ -1,8 +1,12 @@
 ﻿@model FinanceSystem.Models.TransactionViewModel
 
+
+
+<link href="~/Content/css/Addimage.css" rel="stylesheet" />
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/css/style.css" rel="stylesheet" />
 <link href="~/Content/css/menu.css" rel="stylesheet" />
 <div class="app-content-header">
     <h1 class="app-content-headerText">Transaction</h1>
@@ -70,20 +74,7 @@
 </div>
 @{ @Html.Action("FilterCategory") }
 <script src="~/Content/js/menu.js"></script>
-<script>
-    var moreButtons = document.querySelectorAll(".cell-more-button");
 
-    moreButtons.forEach(function (button) {
-        button.addEventListener("click", function () {
-            var optionsMenu = this.nextElementSibling;
-            if (optionsMenu.style.display === "none") {
-                optionsMenu.style.display = "block";
-            } else {
-                optionsMenu.style.display = "none";
-            }
-        });
-    });
-</script>
 <script>
     $(document).ready(function () {
         $('#filterButton').click(function () {

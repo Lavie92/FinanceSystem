@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<FinanceSystem.Models.Transaction>
-
+<link href="~/Content/css/style.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="~/Content/css/style.css">
+<link rel="stylesheet" href="~/Content/css/styles.css">
+<link href="~/Content/css/edit.css" rel="stylesheet" />
 <div class="loadNe">
     <div class="products-area-wrapper tableView" id="transactionList1">
         <div class="products-header">
@@ -45,8 +52,8 @@
 
                 </button>
                 <ul class="options-menu" style="display: none;">
-                    <li>Option 1</li>
-                    <li>Option 2</li>
+                    <li onclick="deleteItem(this)" class="btndelete" data-transactionid="@item.TransactionId">Delete</li>
+                    <li onclick="editItem(this)" class="btnedit" data-transactionid="@item.TransactionId">Edit</li>
                     <li>Option 3</li>
                 </ul>
                 <div class="product-cell image">
@@ -87,15 +94,35 @@
         var total = (decimal)TempData["TotalAmount"];
         if (total >= 0)
         {
-        <p>Yeahhhh bạn đã lãi @String.Format(format, "{0:c0}", @total) cành ㄟ( ▔, ▔ )ㄏ</p>
+            <p style="color: #05DBF2 ">Yeahhhh bạn đã lãi @String.Format(format, "{0:c0}", @total) cành ㄟ( ▔, ▔ )ㄏ</p>
         }
         else
         {
-<p>Không ổn rồi @TempData["Name"] ơi, bạn đã báo nhà @String.Format(format, "{0:c0}", @total) (* ￣︿￣)</p>
+            <p style="color: #05DBF2" >Không ổn rồi @TempData["Name"] ơi, bạn đã báo nhà @String.Format(format, "{0:c0}", @total) (* ￣︿￣)</p>
         }
     }
 
 
+</div>
+<style>
+    li {
+        color: white;
+    }
+</style>
+<div id="editModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(to right, #000336, #4218B8); ">
+                <h4 class="modal-title" style="color: aliceblue;">Edit Transaction</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     var moreButtons = document.querySelectorAll(".cell-more-button");
@@ -111,5 +138,5 @@
         });
     });
 </script>
-
-
+<script src="~/Content/js/Delete.js"></script>
+<script src="~/Content/js/Edit.js"></script>

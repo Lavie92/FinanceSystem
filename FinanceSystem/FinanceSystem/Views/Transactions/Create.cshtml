@@ -6,6 +6,7 @@
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
 <link href="~/Content/css/Addimage.css" rel="stylesheet" />
+<link href="~/Content/css/style.css" rel="stylesheet" />
 <h2>Create</h2>
 
 
@@ -26,7 +27,7 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, "Category Name" , htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CategoryId, "Category Name", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("CategoryId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
@@ -63,9 +64,9 @@
             <div class="col-md-10">
 
 
-                
+
                 <body class="body-1">
-                 
+
 
                     <!-- Upload  -->
                     <div id="file-upload-form" class="uploader">
@@ -90,7 +91,7 @@
                     <!-- partial -->
                     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
                     <script src="~/Content/js/Addimage.js"></script>
-                    </body>
+                </body>
             </div>
         </div>
 
@@ -111,7 +112,8 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary" })
+
 </div>
 
 @section Scripts {

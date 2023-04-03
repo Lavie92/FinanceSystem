@@ -17,9 +17,10 @@ namespace FinanceSystem.Areas.Admin.Controllers
         private FinanceSystemDBContext db = new FinanceSystemDBContext();
         // GET: Admin/UserInformations
         public ActionResult Index()
-        {
+        {         
+            
             return View(db.AspNetUsers.ToList());
-
+            
         }
 
         // GET: Admin/UserInformations/Details/5
@@ -29,10 +30,11 @@ namespace FinanceSystem.Areas.Admin.Controllers
             {
                return View("~/Views/Shared/Error.cshtml");
             }
-            string userId = User.Identity.GetUserId();
             var transaction = db.Transactions.Where(x => x.Wallet.UserId == id).ToList();
-            ViewBag.Total = db.Wallets.Where(x => x.UserId == id).Sum(x => x.AccountBalance);
-            return PartialView(transaction);
+            ViewBag.Total = db.Wallets.Where(x => x.UserId == id).Sum(x => x.AccountBalance.Value);
+            ViewBag.Image = db.UserInformations.FirstOrDefault(x => x.UserId == id).Image;
+            ViewBag.Id = id;
+            return View(transaction);
 
         }
 
@@ -113,6 +115,16 @@ namespace FinanceSystem.Areas.Admin.Controllers
         {
             UserInformation userInformation = db.UserInformations.Find(id);
             db.UserInformations.Remove(userInformation);
+            AspNetUser aspNetUser = db.AspNetUsers.FirstOrDefault(x => x.Id == id);
+            db.AspNetUsers.Remove(aspNetUser);
+            var transaction = db.Transactions.Where(x => x.Wallet.UserId == id).ToList();
+            if (transaction.Count > 0)
+            {
+                foreach (var item in transaction)
+                {
+                    db.Transactions.Remove(item);
+                }
+            }
             db.SaveChanges();
             return RedirectToAction("Index");
         }

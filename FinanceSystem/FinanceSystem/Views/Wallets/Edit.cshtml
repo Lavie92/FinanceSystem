@@ -1,17 +1,23 @@
 ﻿@model FinanceSystem.Models.Wallet
-
+<link href="~/Content/css/form.css" rel="stylesheet" />
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div style="display:flex">
+    <span class="icon" style="color: aqua; width: 30px; position: relative; transform: scale(1.9); transform-origin: left top  ; right:4px;">
+        <ion-icon name="hammer-outline"></ion-icon>
+    </span>
 
-<h2>Edit</h2>
+    <h2 style="color:aqua">Edit</h2>
+</div>
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Wallet</h4>
+        <h4 style="color:aqua">Wallet</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.WalletId)
@@ -50,12 +56,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn"/>
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "my-link" })
 </div>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="http://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

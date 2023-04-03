@@ -1,26 +1,26 @@
 ﻿@model IEnumerable<FinanceSystem.Models.Wallet>
-
+<link href="~/Content/css/form.css" rel="stylesheet" />
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 style="color:aqua">Wallets</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p style="position:relative; bottom:275px">
+    @Html.ActionLink("Create New", "Create", null, new { @class = "my-link" })
 </p>
 <table class="table">
     <tr>
-        <th>
+        <th class="attribute" >
             @Html.DisplayNameFor(model => model.AspNetUser.Email)
         </th>
-        <th>
+        <th class="attribute" >
             @Html.DisplayNameFor(model => model.Plan.Description)
         </th>
-        <th>
+        <th class="attribute" >
             @Html.DisplayNameFor(model => model.WalletName)
         </th>
-        <th>
+        <th class="attribute" >
             @Html.DisplayNameFor(model => model.AccountBalance)
         </th>
         <th></th>
@@ -28,23 +28,23 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="attribute-input">
             @Html.DisplayFor(modelItem => item.AspNetUser.Email)
         </td>
-        <td>
+        <td class="attribute-input">
             @Html.DisplayFor(modelItem => item.Plan.Description)
         </td>
-        <td>
+        <td class="attribute-input">
             @Html.DisplayFor(modelItem => item.WalletName)
         </td>
-        <td>
+        <td class="attribute-input">
             @{ var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN"); }
             @String.Format(format, "{0:c0}", item.AccountBalance)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.WalletId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.WalletId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.WalletId })
+        <td >
+            @Html.ActionLink("Edit", "Edit", new { id = item.WalletId }, new { @class = "link" }) |
+            @Html.ActionLink("Details", "Details", new { id = item.WalletId }, new { @class = "link" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.WalletId }, new { @class = "link" })
         </td>
     </tr>
 }

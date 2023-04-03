@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<FinanceSystem.Models.AspNetUser>
-
+@using FinanceSystem.Models
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
+@{ var format = System.Globalization.CultureInfo.GetCultureInfo("vi-VN");}
 <div class="xl:w-72 w-48 flex-shrink-0 border-r border-gray-200 dark:border-gray-800 h-full overflow-y-auto lg:block hidden p-5">
     <div class="text-xs text-gray-400 tracking-wider">USERS</div>
     <div class="relative mt-2">
@@ -16,20 +17,24 @@
     <div class="space-y-4 mt-3">
         @foreach (var item in Model)
         {
-            <a href="@Url.Action("Details", "UserInformations", new {id = item.Id})">
+            <a href="@Url.Action("Details", "UserInformations", new { id = item.Id })">
                 <button class="bg-white p-3 w-full flex flex-col rounded-md dark:bg-gray-800 shadow">
                     <div class="flex xl:flex-row flex-col items-center font-medium text-gray-900 dark:text-white pb-2 mb-2 xl:border-b border-gray-200 border-opacity-75 dark:border-gray-700 w-full">
-                        @*@if (item.UserInformation != null)
-                            {
-                                <img src="@item.UserInformation.Image" class="w-7 h-7 mr-2 rounded-full" alt="profile" />
-                            }*@
-                        <img src="@*@item.Image*@" class="w-7 h-7 mr-2 rounded-full" alt="profile" />
+
+                        <img src="@item.UserInformation.Image" class="w-7 h-7 mr-2 rounded-full" alt="profile" />
                         @item.UserName
                     </div>
                     <div class="flex items-center w-full">
-                        <div class="text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-blue-100 text-blue-500 rounded-md">Design</div>
-                        <div class="ml-auto text-xs text-gray-500">$1,902.00</div>
-                    </div>
+                        @{
+                            <div class="text-xs py-1 px-2 leading-none dark:bg-gray-900 bg-blue-100 text-blue-500 rounded-md">Design</div>
+
+                            FinanceSystemDBContext db = new FinanceSystemDBContext();
+                            var balance = db.Wallets.Where(x => x.UserId == item.Id).Sum(x => x.AccountBalance);
+
+                            <div class="ml-auto text-xs text-gray-500">@String.Format(format, "{0:c0}", balance)</div>
+                            }
+                        </div>
+                            
                 </button>
             </a>
 
@@ -39,7 +44,4 @@
 </div>
 <div class="flex-grow bg-white dark:bg-gray-900 overflow-y-auto">
 
-    @{
-        Html.RenderAction("Details");
-    }
 </div>

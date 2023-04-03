@@ -5,6 +5,7 @@ namespace FinanceSystem.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Web;
 
     [Table("UserInformation")]
     public partial class UserInformation
@@ -25,6 +26,7 @@ namespace FinanceSystem.Models
 
         [StringLength(100)]
         public string Image { get; set; }
+        public HttpPostedFileBase ImageFile;
 
         public virtual AspNetUser AspNetUser { get; set; }
     }

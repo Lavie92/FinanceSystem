@@ -1,5 +1,9 @@
 ﻿@using FinanceSystem.Models
 @model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,72 +40,72 @@
         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-box login", role = "form" }))
         {
             @Html.AntiForgeryToken()
-    <div class="form-box login">
-        <h2>Login</h2>
-        <form action="#">
-            <div class="input-box">
-                <span class="icon">
-                    <ion-icon name="mail-outline"></ion-icon>
-                </span>
-                <input type="email" name="Email" required>
-                <label>Email</label>
-            </div>
-            <div class="input-box">
-                <span class="icon">
-                    <ion-icon name="lock-closed-outline"></ion-icon>
-                </span>
-                <input type="password" name="Password" required>
-                <label>Password</label>
-            </div>
-            <div class="remeber-forgot">
-                <label>
-                    <input type="checkbox" name="RememberMe">Remember me
-                </label>
-                <a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a>
-            </div>
-            <button type="submit" class="btn">Login</button>
-            <div class="login-register">
-                <p>Don't have an account? <a href="#" class="register-link"> Register</a></p>
-            </div>
-        </form>
-        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-    </div>
-        }
-            <div class="form-box register">
-                <h2>Registration</h2>
-                <form action="Register" method="post">
-                    @Html.AntiForgeryToken()
-
+            <div class="form-box login">
+                <h2>Login</h2>
+                <form action="#">
                     <div class="input-box">
                         <span class="icon">
-                            <ion-icon name="mail"></ion-icon>
+                            <ion-icon name="mail-outline"></ion-icon>
                         </span>
-                        <input type="email" required, name="Email">
+                        <input type="email" name="Email" required>
                         <label>Email</label>
                     </div>
                     <div class="input-box">
                         <span class="icon">
-                            <ion-icon name="person"></ion-icon>
+                            <ion-icon name="lock-closed-outline"></ion-icon>
                         </span>
-                        <input type="password" required, name="Password">
+                        <input type="password" name="Password" required>
                         <label>Password</label>
                     </div>
-                    <div class="input-box">
-                        <span class="icon">
-                            <ion-icon name="lock-closed"></ion-icon>
-                        </span>
-                        <input type="password" required, name="ConfirmPassword">
-                        <label>Confirm Password</label>
+                    <div class="remeber-forgot">
+                        <label>
+                            <input type="checkbox" name="RememberMe">Remember me
+                        </label>
+                        <a href="@Url.Action("ForgotPassword", "Account")">Forgot Password?</a>
                     </div>
-                    <button type="submit" class="btn">Register</button>
+                    <button type="submit" class="btn">Login</button>
                     <div class="login-register">
-                        <p>Already have an account? <a href="#" class="login-link"> Login</a></p>
+                        <p>Don't have an account? <a href="#" class="register-link"> Register</a></p>
                     </div>
                 </form>
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
             </div>
-        
+        }
+        <div class="form-box register">
+            <h2>Registration</h2>
+            <form action="Register" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="mail"></ion-icon>
+                    </span>
+                    <input type="email" required, name="Email">
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="person"></ion-icon>
+                    </span>
+                    <input type="password" required, name="Password">
+                    <label>Password</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">
+                        <ion-icon name="lock-closed"></ion-icon>
+                    </span>
+                    <input type="password" required, name="ConfirmPassword">
+                    <label>Confirm Password</label>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="login-register">
+                    <p>Already have an account? <a href="#" class="login-link"> Login</a></p>
+                </div>
+            </form>
         </div>
-        
+
+    </div>
+
     <script src="~/Content/Login/js/script.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="http://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

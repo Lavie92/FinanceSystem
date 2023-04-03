@@ -12,6 +12,9 @@ using System.Web.Util;
 using FinanceSystem.Models;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using PagedList;
+using PagedList.Mvc;
+
 namespace FinanceSystem.Controllers
 {
     [Authorize]
@@ -20,6 +23,8 @@ namespace FinanceSystem.Controllers
         private FinanceSystemDBContext db = new FinanceSystemDBContext();
 
         // GET: Transactions
+
+
         public ActionResult Index()
         {
             string id = User.Identity.GetUserId();
@@ -46,30 +51,31 @@ namespace FinanceSystem.Controllers
                 list = db.Transactions.ToList().Where(x => x.Wallet.UserId == id).ToList().Where(p => p.CategoryId == cate).ToList();
 
             }
+
             var totalAmount = list.Sum(x => x.Amount);
             TempData["TotalAmount"] = totalAmount;
             return PartialView(list);
         }
 
 
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-            Transaction transaction = db.Transactions.Find(id);
-            string userId = User.Identity.GetUserId();
-            if (transaction.Wallet.UserId != userId)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-            if (transaction == null)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-            return View(transaction);
-        }
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return View("~/Views/Shared/Error.cshtml");
+        //    }
+        //    Transaction transaction = db.Transactions.Find(id);
+        //    string userId = User.Identity.GetUserId();
+        //    if (transaction.Wallet.UserId != userId)
+        //    {
+        //        return View("~/Views/Shared/Error.cshtml");
+        //    }
+        //    if (transaction == null)
+        //    {
+        //        return View("~/Views/Shared/Error.cshtml");
+        //    }
+        //    return View(transaction);
+        //}
 
         // GET: Transactions/Create
         public ActionResult Create()
@@ -112,37 +118,42 @@ namespace FinanceSystem.Controllers
             ViewBag.WalletId = new SelectList(db.Wallets, "WalletId", "UserId", transaction.WalletId);
             return View(transaction);
         }
-
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
-                return View("~/Views/Shared/Error.cshtml");
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Transaction transaction = db.Transactions.Find(id);
-            string userId = User.Identity.GetUserId();
-            if (transaction.Wallet.UserId != userId)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
             if (transaction == null)
             {
-                return View("~/Views/Shared/Error.cshtml");
+                return HttpNotFound();
             }
+
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryID", "CategoryName", transaction.CategoryId);
             ViewBag.WalletId = new SelectList(db.Wallets, "WalletId", "WalletName", transaction.WalletId);
-            return View(transaction);
+            return PartialView("Edit", transaction);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TransactionId,WalletId,CategoryId,Amount,CreateDate,Image,Note")] Transaction transaction)
+        public ActionResult Edit([Bind(Include = "TransactionId,WalletId,CategoryId,Amount,CreateDate,Income,Image,Note")] Transaction transaction)
         {
-            string userId = User.Identity.GetUserId();
-            if (transaction.Wallet.UserId != userId)
+            transaction.ImageFile = Request.Files["ImageFile"];
+            if (transaction.ImageFile != null && transaction.ImageFile.ContentLength > 0)
             {
-                return View("~/Views/Shared/Error.cshtml");
+                var fileName = Path.GetFileName(transaction.ImageFile.FileName);
+                var filePath = Path.Combine(Server.MapPath("~/Content/Images"), fileName);
+                transaction.ImageFile.SaveAs(filePath);
+                transaction.Image = "/Content/Images/" + fileName;
+
             }
+            bool? selectedIncome = transaction.Income;
+            if (!selectedIncome.Value)
+            {
+                transaction.Amount *= -1;
+            }
+            transaction.Amount *= 1;
             if (ModelState.IsValid)
             {
                 db.Entry(transaction).State = EntityState.Modified;
@@ -151,42 +162,30 @@ namespace FinanceSystem.Controllers
             }
             ViewBag.CategoryId = new SelectList(db.Categories, "CategoryID", "CategoryName", transaction.CategoryId);
             ViewBag.WalletId = new SelectList(db.Wallets, "WalletId", "WalletName", transaction.WalletId);
-            return View(transaction);
+            return PartialView("Edit", transaction);
         }
-
-        public ActionResult Delete(int? id)
+      
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            try
             {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-            Transaction transaction = db.Transactions.Find(id);
-            string userId = User.Identity.GetUserId();
-            if (transaction.Wallet.UserId != userId)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-            if (transaction == null)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
-            return View(transaction);
-        }
+                Transaction transaction = db.Transactions.Find(id);
+                if (transaction == null)
+                {
+                    return Json(new { success = false, message = "Sản phẩm không tồn tại." });
+                }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Transaction transaction = db.Transactions.Find(id);
-            string userId = User.Identity.GetUserId();
-            if (transaction.Wallet.UserId != userId)
-            {
-                return View("~/Views/Shared/Error.cshtml");
+                db.Transactions.Remove(transaction);
+                db.SaveChanges();
+
+                return Json(new { success = true });
             }
-            db.Transactions.Remove(transaction);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi xảy ra khi xóa sản phẩm: " + ex.Message });
+            }
         }
+        
 
         protected override void Dispose(bool disposing)
         {

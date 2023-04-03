@@ -1,50 +1,59 @@
 ﻿@model FinanceSystem.Models.Wallet
-
+<link href="~/Content/css/form.css" rel="stylesheet" />
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
 
+<div style="display:flex">
+    <span class="icon" style="color: aqua; width: 30px; position: relative; transform: scale(1.9); transform-origin: left top  ; right:4px;">
+        <ion-icon name="file-tray-full-outline"></ion-icon>
+    </span>
+
+    <h2 style="color:aqua">Details  </h2>
+    
+</div>
 <div>
-    <h4>Wallet</h4>
+    
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt class="attribute">
             @Html.DisplayNameFor(model => model.AspNetUser.Email)
         </dt>
 
-        <dd>
+        <dd class="attribute-input">
             @Html.DisplayFor(model => model.AspNetUser.Email)
         </dd>
 
-        <dt>
+        @*<dt class="attribute">
             @Html.DisplayNameFor(model => model.Plan.Description)
-        </dt>
+        </dt>*@
 
-        <dd>
+        <dd class="attribute-input">
             @Html.DisplayFor(model => model.Plan.Description)
         </dd>
 
-        <dt>
+        <dt class="attribute">
             @Html.DisplayNameFor(model => model.WalletName)
         </dt>
 
-        <dd>
+        <dd class="attribute-input">
             @Html.DisplayFor(model => model.WalletName)
         </dd>
 
-        <dt>
+        <dt class="attribute">
             @Html.DisplayNameFor(model => model.AccountBalance)
         </dt>
 
-        <dd>
+        <dd class="attribute-input">
             @Html.DisplayFor(model => model.AccountBalance)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.WalletId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WalletId }, new { @class = "my-link" }) |
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "my-link" })
 </p>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="http://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>

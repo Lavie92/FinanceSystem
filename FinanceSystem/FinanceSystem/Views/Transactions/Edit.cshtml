@@ -2,16 +2,21 @@
 
 @{
     ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<h2>Edit</h2>
 
 
-@using (Html.BeginForm())
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="~/Content/css/style.css">
+<link rel="stylesheet" href="~/Content/css/styles.css">
+<link href="~/Content/css/menu.css" rel="stylesheet" />
+<link href="~/Content/css/edit.css" rel="stylesheet" />
+@using (Html.BeginForm("Edit", "Transactions", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.AntiForgeryToken()
     
+    @Html.AntiForgeryToken()
+
     <div class="form-horizontal">
         <h4>Transaction</h4>
         <hr />
@@ -19,7 +24,10 @@
         @Html.HiddenFor(model => model.TransactionId)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WalletId, "WalletId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.WalletId, "WalletId", htmlAttributes: new { @class = "control-label col-md-2" } ) 
+
+
+
             <div class="col-md-10">
                 @Html.DropDownList("WalletId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.WalletId, "", new { @class = "text-danger" })
@@ -50,18 +58,53 @@
             </div>
         </div>
 
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Income, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                @Html.RadioButtonFor(m => m.Income, "true")
+                <label>Inflow</label>
+                @Html.RadioButtonFor(m => m.Income, "false")
+                <label>Outflow</label>
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-10">
+                <body class="body-1">
+                    <!-- Upload  -->
+                    <div id="file-upload-form" class="uploader">
+                        <input id="file-upload" type="file" name="ImageFile" accept="image/*" />
+
+                        <label for="file-upload" id="file-drag">
+                            <img id="file-image" src="#" alt="Preview" class="hidden">
+                            <div id="start">
+                                <i class="fa fa-download" aria-hidden="true"></i>
+                                <div>Select a file or drag here</div>
+                                <div id="notimage" class="hidden">Please select an image</div>
+                                <span id="file-upload-btn" class="btn btn-primary">Select a file</span>
+                            </div>
+                            <div id="response" class="hidden">
+                                <div id="messages"></div>
+                                <progress class="progress" id="file-progress" value="0">
+                                    <span>0</span>%
+                                </progress>
+                            </div>
+                        </label>
+                    </div>
+
+
+                    <!-- partial -->
+                    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+                    <script src="~/Content/js/Addimage.js"></script>
+                </body>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2", style = "right: 372px;   top: 153pt;" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control", style = "margin: 29px" } })
                 @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -73,9 +116,18 @@
         </div>
     </div>
 }
-
+<style>
+</style>
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "my-link" })
+    <style>
+        .my-link {
+            text-decoration:none;
+            position: relative;
+            top: 282px;
+            color:#173599
+        }
+    </style>
 </div>
 
 @section Scripts {

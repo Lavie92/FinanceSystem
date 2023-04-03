@@ -47,6 +47,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -184,10 +190,11 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoriesController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserInformationsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UserInformationsController.cs" />
     <Compile Include="Controllers\WalletsController.cs" />
@@ -218,6 +225,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\AccountMn.css" />
+    <Content Include="Content\css\edit.css" />
+    <Content Include="Content\css\font.css" />
+    <Content Include="Content\css\form.css" />
     <Content Include="Content\css\menu.css" />
     <Content Include="Content\css\base.css" />
     <Content Include="Content\css\button.css" />
@@ -230,6 +241,11 @@
     <Content Include="Content\css\styles.css" />
     <Content Include="Content\css\target.css" />
     <Content Include="Content\Error\style.css" />
+    <Content Include="Content\js\AccountMn.js" />
+    <Content Include="Content\js\Delete.js" />
+    <Content Include="Content\js\Edit.js" />
+    <Content Include="Content\js\exporting.js" />
+    <Content Include="Content\js\highcharts.js" />
     <Content Include="Content\js\menu.js" />
     <Content Include="Content\js\Addimage.js" />
     <Content Include="Content\js\sortable.js" />
@@ -246,6 +262,7 @@
     <Content Include="Content\Login\css\style1.css" />
     <Content Include="Content\Login\js\script.js" />
     <Content Include="Content\Login\js\script1.js" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\UploadImage\script.js" />
     <Content Include="Content\UploadImage\style.css" />
     <Content Include="favicon.ico" />
@@ -263,7 +280,14 @@
     <Content Include="Areas\Admin\Views\UserInformations\_UserDetails.cshtml" />
     <Content Include="Areas\Admin\Views\UserInformations\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Categories\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\chart.js" />
+    <Content Include="Scripts\chart.min.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -319,6 +343,10 @@
     <Content Include="Views\UserInformations\Details.cshtml" />
     <Content Include="Views\UserInformations\Edit.cshtml" />
     <Content Include="Views\UserInformations\Index.cshtml" />
+    <Content Include="Views\UserInformations\AccountSetting.cshtml" />
+    <Content Include="Views\Report\Report.cshtml" />
+    <Content Include="Views\Report\ReportCategory.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

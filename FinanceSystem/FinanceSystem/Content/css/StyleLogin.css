@@ -102,17 +102,19 @@ header{
     transition: transform .5s ease, height .2s ease;
 }
 
-.wrapper.active-popup{
-    transform: scale(1);
-}
+.wrapper.active-popup {
+        transform: scale(1);
+        position: relative;
+        left: 10px;
+    }
 
 .wrapper.active{
-    height: 520px;
+    height: 520px;  
 }
 
 .wrapper .form-box{
     width: 100%;
-    padding: 40px;
+    padding: 20px;
 }
 
 .wrapper .form-box.login{

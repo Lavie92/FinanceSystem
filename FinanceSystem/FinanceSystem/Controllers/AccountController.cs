@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using FinanceSystem.Models;
 using System.Web.Helpers;
 
+
 namespace FinanceSystem.Controllers
 {
     [Authorize]
@@ -157,7 +158,6 @@ namespace FinanceSystem.Controllers
         {
             return View();
         }
-
         //
         // POST: /Account/Register
         [HttpPost]
@@ -165,18 +165,33 @@ namespace FinanceSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+             
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    FinanceSystemDBContext db = new FinanceSystemDBContext();
+                    UserInformation userInformation = new UserInformation();
+                    Wallet wallet = new Wallet();
+                    wallet.AccountBalance = 0;
+                    db.Wallets.Add(wallet);
+                    wallet.UserId = user.Id;
+                    userInformation.UserId = user.Id;
+                    userInformation.Image = "/Content/Images/defaultAvatar.jpg";
+                    db.UserInformations.Add(userInformation);
+                    db.SaveChanges();
+
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
                     AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
                     return RedirectToAction("Login", "Account");
